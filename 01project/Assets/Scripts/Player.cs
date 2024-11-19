@@ -15,6 +15,8 @@ public float movVertical;
 
 public bool estamovimentando;
 
+public Animator anim; // controlador de animações
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,10 +26,10 @@ public bool estamovimentando;
     // Update is called once per frame
     void Update()
     {
-        movHorizontal = Input.GetAxisRaw("Horizontal");
-        movVertical = Input.GetAxisRaw("Vertical");
-        corpoPlayer.MovePosition(transform.position + new Vector3(movHorizontal,movVertical,0)*velocidade*Time.deltaTime);
-    } move();
+       
+        Move();
+       
+    } 
 
 
 
@@ -36,7 +38,34 @@ public bool estamovimentando;
     movHorizontal = Input.GetAxisRaw("Horizontal");
     movVertical = Input.GetAxisRaw("Vertical");
     corpoPlayer.MovePosition(transform.position + new Vector3(movHorizontal,movVertical,0)*velocidade*Time.deltaTime);
-    
+    Animation();
+    Ataque();
     
     }
+
+    void Animation(){
+
+        if (movHorizontal==0 && movVertical==0){
+            estamovimentando = false;
+        } else{
+            estamovimentando = true;
+        }
+
+
+        anim.SetBool("semovimenta",estamovimentando);
+        anim.SetFloat("horizontal",movHorizontal);
+        anim.SetFloat("vertical",movVertical);
+
+
+    }
+
+    void Ataque(){
+         
+         if (Input.GetKeyDown("space")){
+            anim.SetTrigger("estaAtacando");
+         }
+
+    }
+
+
 }
